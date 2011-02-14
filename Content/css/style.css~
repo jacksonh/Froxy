@@ -1,7 +1,7 @@
 /* general */
 body {
   font: 1em "lucida Grande",arial,sans-serif;
-  background: #fff url(/img/rainbow.png) repeat;
+  background: #fff url(/Content/img/rainbow.png) repeat;
   color: #333;
 }
 p {
@@ -75,7 +75,7 @@ button {
   line-height: 1.4em;
   font-weight: bold;
   cursor: pointer;
-  background: #e9eaea url(/img/buttonbg.png) repeat-x;
+  background: #e9eaea url(/Content/img/buttonbg.png) repeat-x;
   border: 1px solid #ccc;
   text-shadow: 1px 1px 0 #fff;
   -moz-border-radius: 2px;
@@ -180,11 +180,11 @@ a.nav-item {
 .flash-error,
 .error-msg {
   padding: 6px 6px 6px 36px;
-  background: #ef95a1 url(/img/message-warn.png) 6px 50% no-repeat;
+  background: #ef95a1 url(/Content/img/message-warn.png) 6px 50% no-repeat;
 }
 .flash-notice {
   padding: 6px 6px 6px 36px;
-  background: #86EF9E url(/img/message-info.png) 6px 50% no-repeat;
+  background: #86EF9E url(/Content/img/message-info.png) 6px 50% no-repeat;
 }
 /* help text */
 #help-text {
