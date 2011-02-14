@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Roxy!</title>
+    <meta content="Roxy fetches URLS." name="description">
+
+    <link rel="stylesheet" type="text/css" href="/Content/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/Content/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/Content/css/pygment_trac.css">
+    <link rel="stylesheet" type="text/css" href="/Content/css/jquery.autocomplete.css">
+    <link rel="stylesheet" type="text/css" href="/Content/css/facebox.css">
+
+    <script src="/Content/js/jquery.min.js" type="text/javascript"></script>
+    <script src="/Content/js/jquery.form.js" type="text/javascript"></script>
+    <script src="/Content/js/jquery.autocomplete.js" type="text/javascript"></script>
+    <script src="/Content/js/jquery.relatize_date.js" type="text/javascript"></script>
+    <script src="/Content/js/json2.js" type="text/javascript"></script>
+    <script src="/Content/js/hurl.js" type="text/javascript"></script>
+    <script src="/Content/js/hurl.headers.js" type="text/javascript"></script>
+    <script src="/Content/js/facebox.js" type="text/javascript"></script>
+</head>
+<body>
+  <div id="inset">
+    <div id="header">
+      <a href="/"><img src="/Content/img/logo.png" title="hurl"></a>
+    </div>
+    <div id="content">
+      <p class="flash-error" style="display: none;"> 
+        <a href="#" class="flash-close"><img class="delete" src="/Content/img/delete.png" title="remove"/></a> 
+        <span id="flash-error-msg"></span> 
+      </p> 
+      <p class="flash-notice" style="display: none;"> 
+        <a href="#" class="flash-close"><img class="delete" src="/Content/img/delete.png" title="remove"/></a> 
+        <span id="flash-notice-msg"></span> 
+      </p> 
+      <form id="hurl-form" method="post" action="/">
+  <p>
+    <input type="text" name="url" title="URL" value="" class="defaulted" style="color: rgb(233, 234, 234); ">
+  </p>
+  <p>
+    <select id="select-method" name="method" class="form-alpha">
+      <option value="GET">GET</option>
+      <option value="HEAD">HEAD</option>
+      <option value="POST">POST</option>
+      <option value="PUT">PUT</option>
+      <option value="DELETE">DELETE</option>
+    </select>
+    <span class="form-beta">
+    <!--
+      <label>
+      <input type="checkbox" id="follow_redirects" name="follow_redirects">
+        follow redirects
+      </label>
+    -->
+    </span>
+    </p><div id="post-params" style="display: none; ">
+      <a id="add-param" href="#"><span class="link-icon">+</span> add param</a>
+      <a id="set-post-body" href="#"><span class="link-icon">+</span> set post body</a>
+      <p id="param-fields" style="display:none;">
+          <a href="#" class="param-delete"><img class="delete" src="/Content/img/delete.png" title="remove"></a>
+          <input type="text" name="param-keys[]" class="form-alpha">
+          <input type="text" name="param-vals[]" class="form-beta">
+        </p>
+      <p id="post-body" style="display:none;">
+        <textarea rows="15" name="post-body"></textarea>
+      </p>
+    </div>
+  <p></p>
+  <p id="auth-selection">
+    <label>
+      <input type="radio" name="auth" value="none" checked="checked">
+      no auth
+    </label>
+    <label>
+      <input type="radio" name="auth" value="basic">
+      HTTP basic
+    </label>
+    </p><div id="basic-auth-fields" style="display: none; ">
+      <input type="text" name="username" class="form-alpha defaulted" title="username" value="" style="color: rgb(233, 234, 234); ">
+      <input type="password" name="password" class="form-beta defaulted" title="password" value="" style="color: rgb(233, 234, 234); ">
+    </div>
+  <p></p>
+  <p id="header-selection">
+    <a id="add-header" href="#"><span class="link-icon">+</span> add header</a>
+  </p>
+
+  <p id="header-fields" style="display:none;">
+      <a href="#" class="header-delete"><img class="delete" src="/Content/img/delete.png" title="remove"></a>
+      <input type="text" name="header-keys[]" class="form-alpha">
+      <input type="text" name="header-vals[]" class="form-beta">
+    </p>
+  <p id="send-wrap" class="clearwrap">
+    <button type="submit" class="bigbutton">Send</button>
+    <img src="/Content/img/ajax-loader.gif" id="spinner">
+  </p>
+</form>
+</div>
+<div id="request-and-response" style="display:none;">
+  <p>
+    <span class="toggle-reqres" style="display: none;">
+      <span class="tab-current">request</span> <a class="toggle-reqres-link" href="#">response</a>
+    </span>
+    <span class="toggle-reqres">
+      <a class="toggle-reqres-link" href="#">request</a> <span class="tab-current">response</span>
+    </span>
+  </p>
+  <div id="code-request" class="code-wrap" style="display: none;">
+    <div id="request" class="code-text">
+      
+    </div>
+  </div>
+  <div id="code-response" class="code-wrap">
+    <div id="response" class="code-text">
+      </div>
+  </div>
+</div>
+
+    </div>
+    <div id="footer">
+      <a href="http://twitter.com/hurlit">twitter</a>
+      &nbsp;
+      <a href="http://hurl.it/about/">about</a>
+    </div>
+  </div>
+
+</body></html>
