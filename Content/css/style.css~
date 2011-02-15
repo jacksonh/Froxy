@@ -127,6 +127,7 @@ img.delete {
   padding: 20px 50px 5px 50px;
   border-bottom: 5px solid #26B3CF;
   margin-bottom: 30px;
+  text-align: center;
 }
 #nav {
   float: right;
