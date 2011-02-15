@@ -33,15 +33,15 @@ namespace Froxy {
 		[Post ("/")]
 		public void Curl (IManosContext ctx, string url, string method)
 		{
+			// TODO: Should we set the Host header automagically?
+			Uri u = null;
+			if (!Uri.TryCreate (url, UriKind.Absolute, out u)) {
+				CurlError (ctx, "Url is invalid: {0}", url);
+				return;
+			}
+
 			{
-				// TODO: Manos will handle this DNS stuff internally soon.
-
-				Uri u = null;
-				if (!Uri.TryCreate (url, UriKind.Absolute, out u)) {
-					CurlError (ctx, "Url is invalid: {0}", url);
-					return;
-				}
-
+				// TODO: Manos will handle this DNS stuff internally soon.				
 				IPAddress [] addrs = Dns.GetHostAddresses (u.Host);
 				if (addrs.Length == 0) {
 					CurlError (ctx, "Could not resolve host: {0}", u.Host);
@@ -57,6 +57,8 @@ namespace Froxy {
 			HttpRequest r = new HttpRequest (url) {
 				Method = GetHttpMethod (method),
 			};
+
+			r.Headers.SetNormalizedHeader ("Host", u.Host);
 
 			r.OnResponse += (response) => {
 
