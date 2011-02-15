@@ -61,9 +61,14 @@ namespace Froxy {
 			r.OnResponse += (response) => {
 
 				var res = new Dictionary<object,object> ();
+				var response_md = new StringBuilder ();
+				var request_md = new StringBuilder ();
 
-				res ["header"] = PrettyPrintHeaders (response.Headers);
-				res ["request"]  = "I am the request";
+				r.WriteMetadata (request_md);
+				response.WriteMetadata (response_md);
+
+				res ["header"] = PrettyPrintMetadata (response_md.ToString ());
+				res ["request"]  = PrettyPrintMetadata (request_md.ToString ());
 				res ["body"] = "<div><pre>" + HttpUtility.HtmlEncode (response.PostBody) + "</pre></div>";
 
 				ctx.Response.End (JSON.JsonEncode (res));
@@ -105,20 +110,18 @@ namespace Froxy {
 			}
 		}
 
-		private string PrettyPrintHeaders (HttpHeaders headers)
+		private string PrettyPrintMetadata (string md)
 		{
 			StringBuilder res = new StringBuilder ();
 
 			res.Append ("<div class='highlight'><pre>");
-			
-			foreach (string key in headers.Keys) {
-				string value;
-				if (headers.TryGetValue (key, out value))
-					res.AppendFormat ("<span class='nt'>{0}</span>:<span class='s'>{1}\n</span>", key, value);
+			foreach (string line in md.Split ('\n')) {
+				int ind = line.IndexOf (':');
+				if (ind != -1)
+					res.AppendFormat ("<span class='nt'>{0}</span>:<span class='s'>{1}\n</span>", line.Substring (0, ind), line.Substring (ind + 1, line.Length - ind - 1));
 				else
-					res.AppendFormat ("<span class='nf'>{0}\n</span>", key);
+					res.AppendFormat ("<span class='nf'>{0}\n</span>", line);
 			}
-
 			res.Append ("</pre></div>");
 
 			return res.ToString ();
