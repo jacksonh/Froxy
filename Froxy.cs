@@ -31,7 +31,7 @@ namespace Froxy {
 		}
 
 		[Post ("/")]
-		public void Curl (IManosContext ctx, string url, string method)
+		public void Curl (IManosContext ctx, string url, string method, string auth)
 		{
 			// TODO: Should we set the Host header automagically?
 			Uri u = null;
@@ -59,6 +59,9 @@ namespace Froxy {
 			};
 
 			r.Headers.SetNormalizedHeader ("Host", u.Host);
+
+			if (auth == "basic")
+				HttpUtility.AddBasicAuthentication (r, ctx.Request.Data ["username"], ctx.Request.Data ["password"]);
 
 			r.OnResponse += (response) => {
 
