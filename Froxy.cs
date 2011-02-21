@@ -31,7 +31,7 @@ namespace Froxy {
 		}
 
 		[Post ("/")]
-		public void Curl (IManosContext ctx, string url, string method, string auth, string [] header_keys = null, string [] header_vals = null)
+		public void Curl (IManosContext ctx, string url, string method, string auth, string [] header_keys = null)
 		{
 			// TODO: Should we set the Host header automagically?
 			Uri u = null;
@@ -61,8 +61,9 @@ namespace Froxy {
 			r.Headers.SetNormalizedHeader ("Host", u.Host);
 
 			if (header_keys != null) {
+				var header_vals = ctx.Request.Data.GetList ("header_vals");
 				for (int i = 0; i < header_keys.Length; i++) {
-			   		r.Headers.SetHeader (header_keys [i], header_vals [i]);
+			   		r.Headers.SetHeader (header_keys [i], header_vals [i].SafeValue);
 				}
 			}
 			
