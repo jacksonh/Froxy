@@ -75,6 +75,8 @@ namespace Froxy {
 			if (auth == "basic")
 				HttpUtility.AddBasicAuthentication (r, ctx.Request.Data ["username"], ctx.Request.Data ["password"]);
 
+			AddBody (ctx, r);
+
 			r.OnResponse += (response) => {
 
 				var res = new Dictionary<object,object> ();
@@ -85,7 +87,7 @@ namespace Froxy {
 				response.WriteMetadata (response_md);
 
 				res ["header"] = PrettyPrintMetadata (response_md.ToString ());
-				res ["request"]  = PrettyPrintMetadata (request_md.ToString ());
+				res ["request"]  = PrettyPrintMetadata (request_md.ToString ()) + PrintBody (r.GetBody ());
 				res ["body"] = "<div><pre>" + HttpUtility.HtmlEncode (response.PostBody) + "</pre></div>";
 
 				ctx.Response.End (JSON.JsonEncode (res));
@@ -109,6 +111,24 @@ namespace Froxy {
 			ctx.Response.End (JSON.JsonEncode (res));
 		}
 
+		[Ignore]
+		private void AddBody (IManosContext ctx, HttpRequest r)
+		{
+			var post_body = ctx.Request.Data.Get ("post-body");
+			if (post_body != null)
+				r.PostBody = post_body;
+
+			var param_keys = ctx.Request.Data.GetList ("param-keys");
+			var param_vals = ctx.Request.Data.GetList ("param-vals");
+
+			if (param_keys == null || param_vals == null)
+				return;
+
+			for (int i = 0; i < param_keys.Count; i++) {
+				r.PostData.Set (param_keys [i], param_vals [i]);
+			}
+		}
+		
 		private HttpMethod GetHttpMethod (string method)
 		{
 			switch (method) {
@@ -142,6 +162,13 @@ namespace Froxy {
 			res.Append ("</pre></div>");
 
 			return res.ToString ();
+		}
+
+		private string PrintBody (byte [] body)
+		{
+			if (body == null)
+				return String.Empty;
+			return Encoding.Default.GetString (body);
 		}
 	}
 }
