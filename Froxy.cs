@@ -40,6 +40,11 @@ namespace Froxy {
 				return;
 			}
 
+			if (u.Scheme == "https") {
+				CurlError (ctx, "https connections are not supported yet.");
+				return;
+			}
+
 			{
 				// TODO: Manos will handle this DNS stuff internally soon.				
 				IPAddress [] addrs = Dns.GetHostAddresses (u.Host);
@@ -66,7 +71,7 @@ namespace Froxy {
 			   		r.Headers.SetHeader (header_keys [i], header_vals [i].SafeValue);
 				}
 			}
-			
+
 			if (auth == "basic")
 				HttpUtility.AddBasicAuthentication (r, ctx.Request.Data ["username"], ctx.Request.Data ["password"]);
 
