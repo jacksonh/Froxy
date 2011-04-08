@@ -101,7 +101,7 @@ namespace Froxy {
 			
 		}
 
-		[Ignore]
+		[IgnoreHandler]
 		private void CurlError (IManosContext ctx, string message, params string [] p)
 		{
 			var res = new Dictionary<object,object> ();
