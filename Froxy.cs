@@ -111,7 +111,7 @@ namespace Froxy {
 			ctx.Response.End (JSON.JsonEncode (res));
 		}
 
-		[Ignore]
+		[IgnoreHandler]
 		private void AddBody (IManosContext ctx, HttpRequest r)
 		{
 			var post_body = ctx.Request.Data.Get ("post-body");
